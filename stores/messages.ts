@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref, reactive } from 'vue'
-import type { Ref } from 'vue'
+import { ref, reactive, type Ref } from 'vue'
 import type { TMessages } from '~/types'
 
 export const chatMessages = defineStore('chatMessages', () => {

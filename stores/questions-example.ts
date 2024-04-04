@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { reactive } from 'vue'
-import { TMessageExample } from '~/types'
+import { type TMessageExample } from '~/types'
 
 export const examplesOfQuestion = defineStore('examplesOfQuestion', () => {
     const examples= reactive<TMessageExample[]>([
