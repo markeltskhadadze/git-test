@@ -8,7 +8,6 @@ export default defineNuxtConfig({
     '@nuxt/test-utils/module'
   ],
   chatgpt: {
-    apiKey: process.env.CHATGPT_API_KEY,
-    isEnabled: true
+    apiKey: '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'
   },
 })
