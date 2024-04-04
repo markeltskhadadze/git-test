@@ -1,5 +1,5 @@
 <template>
-  <div class="flex">
+  <div class="main-container">
     <Notivue v-slot="item">
       <Notification :item="item" />
     </Notivue>
@@ -19,8 +19,8 @@
 </script>
 
 <style scoped>
-.message-container {
-  flex: 1 0 80%;
-  background: #212121;
+.main-container {
+  display: flex;
+  min-height: 100vh;
 }
 </style>

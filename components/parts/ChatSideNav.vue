@@ -47,7 +47,6 @@
 
 <style scoped>
   .side-nav-container {
-    height: 100vh;
     background: #181818;
     flex: 1 0 115px;
     padding: 10px 20px;
@@ -62,6 +61,7 @@
     gap: 10px;
     padding: 10px;
     cursor: pointer;
+    width: 95%;
   }
   .side-nav-header:hover {
     background: #212121;

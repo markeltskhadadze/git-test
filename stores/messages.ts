@@ -26,9 +26,11 @@ export const chatMessages = defineStore('chatMessages', () => {
                     role: response[0].message.role,
                     content: response[0].message.content
                 }
+
                 messageData.value = ''
                 chatTrees.push(responseMessage)
             } catch(error) {
+                chatTrees.length = 0
                 push.error(error.message)
                 showNewChat.value = true
             }

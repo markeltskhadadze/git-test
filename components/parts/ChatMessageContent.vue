@@ -68,7 +68,6 @@
     align-items: center;
     flex: 1 0 80%;
     background: #212121;
-    height: 100vh;
     position: relative;
   }
   .messages-wrapper {
@@ -148,6 +147,6 @@
     min-width: 90%;
   }
   .messages-wrapper-mobile {
-    min-width: 100%;
+    min-width: 400px;
   }
 </style>
