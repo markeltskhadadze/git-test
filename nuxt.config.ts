@@ -7,6 +7,6 @@ export default defineNuxtConfig({
     '@pinia/nuxt'
   ],
   chatgpt: {
-    apiKey: process.env.CHATGPT_API_KEY
+    apiKey: 'xxxx'
   },
 })
