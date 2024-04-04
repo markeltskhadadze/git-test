@@ -6,14 +6,9 @@ export const chatTree = defineStore('chatTree', () => {
     const userMessages = chatMessages()
     const chatHover: Ref<number | null> = ref(null)
     const userChats: Ref<string[]> = ref(['New chat'])
-    const showModal: Ref<boolean> = ref(false)
 
     function showChatActions(index: number) {
         chatHover.value = chatHover.value? null : index
-    }
-
-    function showActionModal() {
-        showModal.value = !showModal.value
     }
 
     function addNewChatGroup() {
@@ -31,9 +26,7 @@ export const chatTree = defineStore('chatTree', () => {
     return {
         userChats,
         chatHover,
-        showModal,
         showChatActions,
-        showActionModal,
         addNewChatGroup
     }
 })

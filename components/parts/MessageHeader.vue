@@ -7,7 +7,11 @@
       Click
     </p>
     <p>ChatGPT</p>
-    <p>click</p>
+    <img
+        src="../../public/upload-icon.png"
+        alt="upload-image"
+        class="upload-image"
+    />
   </div>
 </template>
 
@@ -32,5 +36,10 @@
   .message-header p {
     font-size: 18px;
     color: #ffffffff;
+  }
+  .upload-image {
+    width: 18px;
+    height: 18px;
+    padding: 15px;
   }
 </style>

@@ -23,8 +23,8 @@
 </template>
 
 <script setup lang="ts">
-  import { examplesOfQuestion } from '~/stores/questions-example'
-  import { chatMessages } from '~/stores/messages'
+  import { examplesOfQuestion } from '@/stores/questions-example'
+  import { chatMessages } from '@/stores/messages'
 
   const questions = examplesOfQuestion()
   const userMessages = chatMessages()

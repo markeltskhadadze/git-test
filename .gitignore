@@ -6,6 +6,9 @@
 .cache
 dist
 
+# Ignore Nuxt.js config file
+nuxt.config.js
+
 # Node dependencies
 node_modules
 

@@ -24,12 +24,7 @@
            class="relative"
             v-if="userChatTree.chatHover === index"
        >
-         <p @click="userChatTree.showActionModal">...</p>
-         <div v-if="userChatTree.showModal" class="action-chat-modal">
-           <p>Share</p>
-           <p>Rename</p>
-           <p>Delete chat</p>
-         </div>
+         <p>...</p>
        </div>
      </div>
    </div>

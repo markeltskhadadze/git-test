@@ -1,16 +1,14 @@
 import { defineStore } from 'pinia'
-import {computed, ref, Ref, reactive } from 'vue'
+import { ref, reactive } from 'vue'
+import type { Ref } from 'vue'
 import type { TMessages } from '~/types'
 
 export const chatMessages = defineStore('chatMessages', () => {
-    const allMessages: Ref<string[]> = ref([])
     const messageData = ref('')
     const showMobileSideNav: Ref<boolean> = ref(false)
     const showNewChat: Ref<boolean> = ref(true)
     const chatTrees = reactive<TMessages[]>([])
     const { chatCompletion } = useChatgpt()
-
-    const getAllMessages = computed(() => allMessages.value)
 
     async function getChatTree(exampleQuestion: string | null) {
         showNewChat.value = false
@@ -29,7 +27,6 @@ export const chatMessages = defineStore('chatMessages', () => {
                 }
                 messageData.value = ''
                 chatTrees.push(responseMessage)
-                console.log(chatTrees)
             } catch(error) {
                 alert(`Join the waiting list if you want to use GPT-4 models: ${error}`)
                 showNewChat.value = true
@@ -38,11 +35,9 @@ export const chatMessages = defineStore('chatMessages', () => {
     }
 
     return {
-        allMessages,
         messageData,
         showMobileSideNav,
         chatTrees,
-        getAllMessages,
         showNewChat,
         getChatTree
     }
