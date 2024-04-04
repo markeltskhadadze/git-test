@@ -104,5 +104,6 @@
     position: fixed;
     z-index: 50;
     min-width: 60%;
+    height: 100%;
   }
 </style>
