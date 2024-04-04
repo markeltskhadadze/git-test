@@ -1,6 +1,9 @@
 <template>
   <div class="flex">
-    <ChatSideNav />
+    <Notivue v-slot="item">
+      <Notification :item="item" />
+    </Notivue>
+    <ChatSideNav v-if="checkScreen || userMessages.showMobileSideNav" />
     <ChatMessageContent />
   </div>
 </template>

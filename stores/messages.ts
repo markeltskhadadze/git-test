@@ -10,13 +10,14 @@ export const chatMessages = defineStore('chatMessages', () => {
     const chatTrees = reactive<TMessages[]>([])
     const { chatCompletion } = useChatgpt()
 
-    async function getChatTree(exampleQuestion: string | null) {
+    async function getChatTree(exampleQuestion: string) {
         showNewChat.value = false
-        if (messageData.value || exampleQuestion) {
+        const userMessage = messageData.value ? messageData.value : exampleQuestion
+        if (userMessage) {
             try {
                 const message = {
                     role: 'user',
-                    content: exampleQuestion ? exampleQuestion : messageData.value,
+                    content: userMessage
                 }
                 chatTrees.push(message)
 
@@ -28,7 +29,7 @@ export const chatMessages = defineStore('chatMessages', () => {
                 messageData.value = ''
                 chatTrees.push(responseMessage)
             } catch(error) {
-                alert(`Join the waiting list if you want to use GPT-4 models: ${error}`)
+                push.error(error.message)
                 showNewChat.value = true
             }
         }

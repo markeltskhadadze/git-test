@@ -5,7 +5,12 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     'nuxt-chatgpt',
     '@pinia/nuxt',
-    '@nuxt/test-utils/module'
+    '@nuxt/test-utils/module',
+    'notivue/nuxt'
+  ],
+  css: [
+    'notivue/notifications.css',
+    'notivue/animations.css'
   ],
   chatgpt: {
     apiKey: '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'

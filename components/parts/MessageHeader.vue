@@ -1,11 +1,12 @@
 <template>
   <div class="message-header">
-    <p
+    <img
+        src="../../public/menu-icon.webp"
+        alt="upload-image"
+        class="upload-image"
         v-if="!checkScreen"
         @click="userMessages.showMobileSideNav = !userMessages.showMobileSideNav"
-    >
-      Click
-    </p>
+    />
     <p>ChatGPT</p>
     <img
         src="../../public/upload-icon.png"
@@ -40,6 +41,5 @@
   .upload-image {
     width: 18px;
     height: 18px;
-    padding: 15px;
   }
 </style>

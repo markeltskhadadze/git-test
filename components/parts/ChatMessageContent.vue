@@ -31,7 +31,7 @@
       :class="{ 'message-field-mobile': !checkScreen }"
     >
       <ExampleOfQuestions v-if="userMessages.showNewChat" />
-      <div class="relative">
+      <div class="relative" :class="{ 'mx-6': !checkScreen }">
         <input
             placeholder="Message ChatGPT…"
             v-model="userMessages.messageData"

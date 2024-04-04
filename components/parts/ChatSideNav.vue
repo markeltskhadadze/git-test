@@ -1,7 +1,11 @@
 <template>
  <div :class="{ 'mobile-side-nav': !checkScreen }" class="side-nav-container">
    <div v-if="!checkScreen" class="close-side-nav">
-     <p>x</p>
+     <img
+         @click="userMessages.showMobileSideNav = !userMessages.showMobileSideNav"
+         src="../../public/1544641784.png"
+         alt="close-side-nav"
+     />
    </div>
    <div class="side-nav-header" @click="userChatTree.addNewChatGroup">
      <img
@@ -34,9 +38,11 @@
 <script setup lang="ts">
   import { screen } from '~/mixins/check-screen'
   import { chatTree } from '~/stores/chat-tree'
+  import { chatMessages } from '~/stores/messages'
 
   const userChatTree = chatTree()
   const { checkScreen } = screen.setup()
+  const userMessages = chatMessages()
 </script>
 
 <style scoped>
@@ -78,22 +84,13 @@
     color: #ececec;
     font-size: 14px;
     padding: 8px;
-    //white-space: nowrap;
     overflow: hidden;
-  }
-  .action-chat-modal {
-    position: absolute;
-    z-index: 50;
-    background: #2e2e2e;
-    border-radius: 12px;
-  }
-  .action-chat-modal p {
-    margin: 6px;
-    padding: 10px;
-    color: #ffffff;
   }
   .close-side-nav {
     background: #181818;
+    width: 16px;
+    position: absolute;
+    right: 15px;
   }
   .chat-list {
     margin-top: 25px;

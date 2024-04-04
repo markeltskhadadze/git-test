@@ -1,4 +1,4 @@
 <template>
-  <ChatWidget />
+  <NuxtPage />
 </template>
 

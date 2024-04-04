@@ -8,7 +8,7 @@
       />
       <h2>How can I help you today?</h2>
     </div>
-    <div class="flex flex-wrap gap-3 mb-3">
+    <div class="flex flex-wrap gap-3 mb-3" :class="{ 'justify-center': !checkScreen }">
       <div
           class="questions-block relative"
           v-for="(question, index) in questions.examples"
@@ -25,9 +25,11 @@
 <script setup lang="ts">
   import { examplesOfQuestion } from '@/stores/questions-example'
   import { chatMessages } from '@/stores/messages'
+  import { screen } from '~/mixins/check-screen'
 
   const questions = examplesOfQuestion()
   const userMessages = chatMessages()
+  const { checkScreen } = screen.setup()
 </script>
 
 <style scoped>
