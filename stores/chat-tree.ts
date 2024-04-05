@@ -12,7 +12,6 @@ export const chatTree = defineStore('chatTree', () => {
     const selectedChatsIndex: Ref<number[]> = ref([])
     const openAcceptModal: Ref<boolean> = ref(false)
     const newChatName: Ref<string> = ref('')
-    const asdasd: Ref<number[]> = ref([])
 
     const getSelectedChats = computed(() => {
         return selectedChats.value.some(i => i)
@@ -78,7 +77,6 @@ export const chatTree = defineStore('chatTree', () => {
     }
 
     return {
-        asdasd,
         userChats,
         chatHover,
         selectedChats,

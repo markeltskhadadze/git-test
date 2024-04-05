@@ -52,16 +52,9 @@
            @click="userChatTree.checkboxClick(index)"
        />
        <div class="flex justify-between items-center w-full">
-         <p
-             v-if="!userChatTree.selectedChatsIndex.includes(index) && !userChatTree.newChatName"
-             class="user-chat-name"
-         >
-           {{ chat }}
-         </p>
          <input
              class="edit-chat-field"
-             v-else
-             v-model="userChatTree.newChatName"
+             :value="chat"
              @keyup.enter="userChatTree.changeChatName(index)"
          />
          <svg @click="userChatTree.toggleActionModal(index, 'openModal')" xmlns="http://www.w3.org/2000/svg" class="action-dots h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -182,17 +175,6 @@
     background: #212121;
     border-radius: 8px;
   }
-  .user-chat-name {
-    color: #ececec;
-    font-size: 14px;
-    padding: 8px;
-    overflow: hidden;
-    position: relative;
-    font-weight: 600;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    flex: 0 1 80%;
-  }
   .add-chat {
     color: #ffffffff;
   }
@@ -210,15 +192,16 @@
   }
   .edit-chat-field {
     background: transparent;
-    border: 1px solid #909090;
     border-radius: 10px;
-    color: #c3c3c3;
-    max-width: 35%;
+    max-width: 75%;
     margin: 0 9px;
-    padding: 0 6px;
+    color: #ececec;
+    font-size: 14px;
+    padding: 8px;
   }
   .action-dots {
     color: #ffffff;
+    margin-right: 10px;
   }
   .chat-logo {
     width: 28px;
@@ -227,7 +210,7 @@
   }
   .chat-list-title {
     color: #e8e8e8;
-    padding: 8px;
+    padding: 6px 8px;
     font-weight: 600;
   }
   input[type=checkbox] {
@@ -251,6 +234,7 @@
     display: block;
     position: absolute;
     top: 25%;
+    left: 3%;
     width: 20px;
     height: 20px;
     border: 1px solid #ffffff;
