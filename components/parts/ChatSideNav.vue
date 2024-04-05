@@ -49,6 +49,7 @@
        <input
            type="checkbox"
            v-model="userChatTree.selectedChats[index]"
+           @click="userChatTree.checkboxClick(index)"
        />
        <p>{{ chat }}</p>
        <p
@@ -115,14 +116,16 @@
   .edit-icon {
     color: #ffffffff;
     width: 20px;
+    cursor: pointer;
   }
   .delete-icon {
     color: #96393a;
     width: 20px;
+    cursor: pointer;
   }
   .side-nav-container {
     background: #181818;
-    flex: 1 0 115px;
+    flex: 1 0 5%;
     padding: 10px 20px;
     overflow-y: auto;
   }

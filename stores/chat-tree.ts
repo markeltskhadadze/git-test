@@ -9,6 +9,7 @@ export const chatTree = defineStore('chatTree', () => {
     const selectedChats: Ref<boolean[]> = ref(Array(userChats.value.length).fill(false))
     const selectAll: Ref<boolean> = ref(false)
     const showActionModal: Ref<boolean[]> = ref([])
+    const selectedChatsIndex: Ref<number[]> = ref([])
 
     const getSelectedChats = computed(() => {
         return selectedChats.value.some(i => i)
@@ -27,14 +28,21 @@ export const chatTree = defineStore('chatTree', () => {
         }
     }
 
-    function deleteChat (index: number | object) {
-        if (typeof index === 'number') {
-            userChats.value.splice(index, 1)
+    function deleteChat () {
+        if (selectedChatsIndex.value.length) {
+            userChats.value = userChats.value.filter((_, index) => !selectedChatsIndex.value.includes(index))
         } else {
             selectAll.value = false
             selectedChats.value = selectedChats.value.fill(selectAll.value)
             userChats.value.length = 0
         }
+    }
+
+    function checkboxClick(index: number) {
+        const indexExists = selectedChatsIndex.value.indexOf(index)
+        indexExists === -1
+            ? selectedChatsIndex.value.push(index)
+            : selectedChatsIndex.value.splice(indexExists, 1)
     }
 
     function selectAllChats() {
@@ -49,6 +57,7 @@ export const chatTree = defineStore('chatTree', () => {
         selectAll,
         showActionModal,
         getSelectedChats,
+        checkboxClick,
         addNewChatGroup,
         deleteChat,
         selectAllChats

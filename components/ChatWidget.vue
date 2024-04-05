@@ -1,5 +1,5 @@
 <template>
-  <div class="main-container">
+  <div v-if="width" class="main-container">
     <Notivue v-slot="item">
       <Notification :item="item" />
     </Notivue>
@@ -16,7 +16,7 @@
   import { screen } from '~/mixins/check-screen'
   import { chatMessages } from '~/stores/messages'
 
-  const { checkScreen } = screen.setup()
+  const { checkScreen, width } = screen.setup()
   const userMessages = chatMessages()
 </script>
 

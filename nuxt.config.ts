@@ -6,7 +6,8 @@ export default defineNuxtConfig({
     'nuxt-chatgpt',
     '@pinia/nuxt',
     '@nuxt/test-utils/module',
-    'notivue/nuxt'
+    'notivue/nuxt',
+    'nuxt-aos'
   ],
   css: [
     'notivue/notifications.css',

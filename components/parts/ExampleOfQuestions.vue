@@ -14,6 +14,7 @@
           v-for="(question, index) in questions.examples"
           :key="index"
           @click="userMessages.getChatTree(question.title)"
+          data-aos="zoom-in"
       >
         <p>{{ question.title }}</p>
         <p class="opacity-50">{{ question.description }}</p>
