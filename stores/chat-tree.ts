@@ -8,6 +8,11 @@ export const chatTree = defineStore('chatTree', () => {
     const userChats: Ref<string[]> = ref(['New chat'])
     const selectedChats: Ref<boolean[]> = ref(Array(userChats.value.length).fill(false))
     const selectAll: Ref<boolean> = ref(false)
+    const showActionModal: Ref<boolean[]> = ref([])
+
+    const getSelectedChats = computed(() => {
+        return selectedChats.value.some(i => i)
+    })
 
     function addNewChatGroup() {
         if (!userMessages.chatTrees.length) {
@@ -42,6 +47,8 @@ export const chatTree = defineStore('chatTree', () => {
         chatHover,
         selectedChats,
         selectAll,
+        showActionModal,
+        getSelectedChats,
         addNewChatGroup,
         deleteChat,
         selectAllChats

@@ -22,20 +22,23 @@
    </div>
    <div v-if="userChatTree.userChats.length" class="chat-list">
      <div class="flex items-center justify-between relative">
-       <input
-           type="checkbox"
-           v-model="userChatTree.selectAll"
-           @change="userChatTree.selectAllChats"
-       />
-       <p class="chat-list-title">Archive</p>
+       <div class="flex items-center">
+         <input
+             type="checkbox"
+             v-model="userChatTree.selectAll"
+             @change="userChatTree.selectAllChats"
+         />
+         <p class="chat-list-title">Archive</p>
+       </div>
        <transition name="fade">
-         <button
-             class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded"
+         <div
              @click="userChatTree.deleteChat"
-             v-if="userChatTree.selectAll"
+             v-if="userChatTree.selectAll || userChatTree.getSelectedChats"
          >
-           Delete all
-         </button>
+           <svg xmlns="http://www.w3.org/2000/svg" class="delete-icon h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+             <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+           </svg>
+         </div>
        </transition>
      </div>
      <div
@@ -48,16 +51,25 @@
            v-model="userChatTree.selectedChats[index]"
        />
        <p>{{ chat }}</p>
-       <p>...</p>
-       <transition name="fade">
-         <button
-             class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded"
-             v-if="userChatTree.selectedChats[index] && !userChatTree.selectAll"
-             @click="userChatTree.deleteChat(index)"
-         >
-           Delete
-         </button>
-       </transition>
+       <p
+           @click="userChatTree.showActionModal[index] = !userChatTree.showActionModal[index]"
+       >
+         ...
+       </p>
+       <div class="actions-popup" v-if="userChatTree.showActionModal[index]">
+         <div class="flex items-center gap-3">
+           <svg xmlns="http://www.w3.org/2000/svg" class="edit-icon h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+             <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+           </svg>
+           <p>Rename</p>
+         </div>
+         <div class="flex items-center gap-3">
+           <svg xmlns="http://www.w3.org/2000/svg" class="delete-icon h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+             <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+           </svg>
+           <p>Delete</p>
+         </div>
+       </div>
      </div>
    </div>
  </div>
@@ -79,6 +91,34 @@
   }
   .fade-enter, .fade-leave-to {
     opacity: 0;
+  }
+  .actions-popup {
+    position: absolute;
+    right: 0;
+    top: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 15px;
+    background: #2e2e2e;
+    border-radius: 12px;
+    z-index: 50;
+    min-width: 150px;
+  }
+  .actions-popup p {
+    font-size: 14px;
+    color: #ffffff;
+  }
+  .actions-popup p:last-child {
+    color: #96393a;
+  }
+  .edit-icon {
+    color: #ffffffff;
+    width: 20px;
+  }
+  .delete-icon {
+    color: #96393a;
+    width: 20px;
   }
   .side-nav-container {
     background: #181818;
@@ -108,7 +148,7 @@
   }
   .user-chat {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     cursor: pointer;
   }
   .user-chat:hover {
@@ -120,6 +160,8 @@
     font-size: 14px;
     padding: 8px;
     overflow: hidden;
+    position: relative;
+    font-weight: 600;
   }
   .add-chat {
     color: #ffffffff;
@@ -144,6 +186,7 @@
   .chat-list-title {
     color: #e8e8e8;
     padding: 8px;
+    font-weight: 600;
   }
   input[type=checkbox] {
     cursor: pointer;
