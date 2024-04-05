@@ -21,7 +21,7 @@
      </svg>
    </div>
    <div v-if="userChatTree.userChats.length" class="chat-list">
-     <div class="flex items-center justify-between relative">
+     <div class="flex items-center justify-between relative px-2">
        <div class="flex items-center">
          <input
              type="checkbox"
@@ -32,7 +32,7 @@
        </div>
        <transition name="fade">
          <div
-             @click="userChatTree.deleteChat"
+             @click="userChatTree.openAcceptModal = !userChatTree.openAcceptModal"
              v-if="userChatTree.selectAll || userChatTree.getSelectedChats"
          >
            <svg xmlns="http://www.w3.org/2000/svg" class="delete-icon h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -73,6 +73,7 @@
        </div>
      </div>
    </div>
+   <AcceptModal />
  </div>
 </template>
 
@@ -80,6 +81,7 @@
   import { screen } from '~/mixins/check-screen'
   import { chatTree } from '~/stores/chat-tree'
   import { chatMessages } from '~/stores/messages'
+  import AcceptModal from '~/components/parts/AcceptModal.vue'
 
   const userChatTree = chatTree()
   const { checkScreen } = screen.setup()
@@ -137,7 +139,7 @@
     align-items: center;
     justify-content: space-between;
     gap: 10px;
-    padding: 10px 0;
+    padding: 10px 8px;
     cursor: pointer;
     width: 95%;
   }
@@ -153,6 +155,7 @@
     display: flex;
     justify-content: flex-start;
     cursor: pointer;
+    padding: 0 8px;
   }
   .user-chat:hover {
     background: #212121;
@@ -165,6 +168,9 @@
     overflow: hidden;
     position: relative;
     font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 60%;
   }
   .add-chat {
     color: #ffffffff;
@@ -245,11 +251,11 @@
     transform: rotate(45deg);
     position: absolute;
     top: 3px;
-    left: 7px;
+    left: 15px;
   }
   .mobile-side-nav {
     position: fixed;
-    z-index: 50;
+    z-index: 30;
     min-width: 60%;
     height: 100%;
   }

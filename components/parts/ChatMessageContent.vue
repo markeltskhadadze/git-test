@@ -157,6 +157,7 @@
   }
   .message-field-mobile {
     min-width: 90%;
+    margin: 0 15px;
   }
   .messages-wrapper-mobile {
     min-width: 400px;

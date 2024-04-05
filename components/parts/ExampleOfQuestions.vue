@@ -8,13 +8,14 @@
       />
       <h2>How can I help you today?</h2>
     </div>
-    <div class="flex flex-wrap gap-3 mb-3" :class="{ 'justify-center': !checkScreen }">
+    <div class="flex flex-wrap gap-3 mb-3 " :class="{ 'justify-center': !checkScreen }">
       <div
           class="questions-block relative"
           v-for="(question, index) in questions.examples"
           :key="index"
           @click="userMessages.getChatTree(question.title)"
           data-aos="zoom-in"
+          :style="{ 'width': checkScreen ? 'auto' : 'calc(50% - 1.5rem)' }"
       >
         <p>{{ question.title }}</p>
         <p class="opacity-50">{{ question.description }}</p>

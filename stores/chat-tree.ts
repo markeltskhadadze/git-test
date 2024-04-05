@@ -1,18 +1,23 @@
 import { defineStore } from 'pinia'
-import { ref, type Ref, toRaw } from 'vue'
+import { ref, type Ref } from 'vue'
 import { chatMessages } from '@/stores/messages'
 
 export const chatTree = defineStore('chatTree', () => {
     const userMessages = chatMessages()
     const chatHover: Ref<number | null> = ref(null)
-    const userChats: Ref<string[]> = ref(['New chat'])
+    const userChats: Ref<string[]> = ref(['New chat', 'q23123', 'asdfhjsdf', 'gdfb'])
     const selectedChats: Ref<boolean[]> = ref(Array(userChats.value.length).fill(false))
     const selectAll: Ref<boolean> = ref(false)
     const showActionModal: Ref<boolean[]> = ref([])
     const selectedChatsIndex: Ref<number[]> = ref([])
+    const openAcceptModal: Ref<boolean> = ref(false)
 
     const getSelectedChats = computed(() => {
         return selectedChats.value.some(i => i)
+    })
+
+    const getSelectedChatCount = computed(() => {
+        return selectedChatsIndex.value.length ? selectedChatsIndex.value.length : 'all'
     })
 
     function addNewChatGroup() {
@@ -33,9 +38,10 @@ export const chatTree = defineStore('chatTree', () => {
             userChats.value = userChats.value.filter((_, index) => !selectedChatsIndex.value.includes(index))
         } else {
             selectAll.value = false
-            selectedChats.value = selectedChats.value.fill(selectAll.value)
             userChats.value.length = 0
         }
+        selectedChats.value = selectedChats.value.fill(selectAll.value)
+        openAcceptModal.value = false
     }
 
     function checkboxClick(index: number) {
@@ -46,8 +52,7 @@ export const chatTree = defineStore('chatTree', () => {
     }
 
     function selectAllChats() {
-        const newValue = selectAll.value
-        selectedChats.value = selectedChats.value.fill(newValue)
+        selectedChats.value = selectedChats.value.fill(selectAll.value)
     }
 
     return {
@@ -57,6 +62,8 @@ export const chatTree = defineStore('chatTree', () => {
         selectAll,
         showActionModal,
         getSelectedChats,
+        openAcceptModal,
+        getSelectedChatCount,
         checkboxClick,
         addNewChatGroup,
         deleteChat,
