@@ -1,16 +1,18 @@
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
-import { chatMessages } from '@/stores/messages'
+import { chatMessages } from '~/stores/messages'
 
 export const chatTree = defineStore('chatTree', () => {
     const userMessages = chatMessages()
     const chatHover: Ref<number | null> = ref(null)
-    const userChats: Ref<string[]> = ref(['New chat', 'q23123', 'asdfhjsdf', 'gdfb'])
+    const userChats: Ref<string[]> = ref(['New chat'])
     const selectedChats: Ref<boolean[]> = ref(Array(userChats.value.length).fill(false))
     const selectAll: Ref<boolean> = ref(false)
-    const showActionModal: Ref<boolean[]> = ref([])
+    const showActionModal: Ref<number[]> = ref([])
     const selectedChatsIndex: Ref<number[]> = ref([])
     const openAcceptModal: Ref<boolean> = ref(false)
+    const newChatName: Ref<string> = ref('')
+    const asdasd: Ref<number[]> = ref([])
 
     const getSelectedChats = computed(() => {
         return selectedChats.value.some(i => i)
@@ -55,7 +57,28 @@ export const chatTree = defineStore('chatTree', () => {
         selectedChats.value = selectedChats.value.fill(selectAll.value)
     }
 
+    function toggleActionModal(index: number, action: string, chat?: string) {
+        if (action === 'edit') {
+            selectedChatsIndex.value = [index]
+        } else {
+            const existingIndex = showActionModal.value.indexOf(index)
+            if (existingIndex !== -1) {
+                showActionModal.value.splice(existingIndex, 1)
+            } else {
+                showActionModal.value = [index]
+            }
+        }
+        newChatName.value = chat || ''
+    }
+
+
+    function changeChatName(index: number) {
+        userChats.value[index] = newChatName.value
+        selectedChatsIndex.value.length = 0
+    }
+
     return {
+        asdasd,
         userChats,
         chatHover,
         selectedChats,
@@ -64,6 +87,10 @@ export const chatTree = defineStore('chatTree', () => {
         getSelectedChats,
         openAcceptModal,
         getSelectedChatCount,
+        selectedChatsIndex,
+        newChatName,
+        toggleActionModal,
+        changeChatName,
         checkboxClick,
         addNewChatGroup,
         deleteChat,

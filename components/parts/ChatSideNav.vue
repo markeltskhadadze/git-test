@@ -51,24 +51,43 @@
            v-model="userChatTree.selectedChats[index]"
            @click="userChatTree.checkboxClick(index)"
        />
-       <p>{{ chat }}</p>
-       <p
-           @click="userChatTree.showActionModal[index] = !userChatTree.showActionModal[index]"
+       <div class="flex justify-between items-center w-full">
+         <p
+             v-if="!userChatTree.selectedChatsIndex.includes(index) && !userChatTree.newChatName"
+             class="user-chat-name"
+         >
+           {{ chat }}
+         </p>
+         <input
+             class="edit-chat-field"
+             v-else
+             v-model="userChatTree.newChatName"
+             @keyup.enter="userChatTree.changeChatName(index)"
+         />
+         <svg @click="userChatTree.toggleActionModal(index, 'openModal')" xmlns="http://www.w3.org/2000/svg" class="action-dots h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+           <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
+         </svg>
+       </div>
+       <div
+           class="actions-popup"
+           v-if="userChatTree.showActionModal.includes(index) && !userChatTree.selectedChatsIndex.includes(index)"
        >
-         ...
-       </p>
-       <div class="actions-popup" v-if="userChatTree.showActionModal[index]">
          <div class="flex items-center gap-3">
            <svg xmlns="http://www.w3.org/2000/svg" class="edit-icon h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
              <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
            </svg>
-           <p>Rename</p>
+           <p @click="userChatTree.toggleActionModal(index, 'edit', chat)" class="action-button">Rename</p>
          </div>
          <div class="flex items-center gap-3">
            <svg xmlns="http://www.w3.org/2000/svg" class="delete-icon h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
              <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
            </svg>
-           <p>Delete</p>
+           <p
+               @click="userChatTree.openAcceptModal = !userChatTree.openAcceptModal"
+               class="delete-button"
+           >
+             Delete
+           </p>
          </div>
        </div>
      </div>
@@ -97,7 +116,7 @@
   }
   .actions-popup {
     position: absolute;
-    right: 0;
+    left: 30%;
     top: 80%;
     display: flex;
     flex-direction: column;
@@ -110,9 +129,11 @@
   }
   .actions-popup p {
     font-size: 14px;
-    color: #ffffff;
   }
-  .actions-popup p:last-child {
+  .action-button {
+    color: #ececec;
+  }
+  .delete-button {
     color: #96393a;
   }
   .edit-icon {
@@ -153,7 +174,7 @@
   }
   .user-chat {
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     cursor: pointer;
     padding: 0 8px;
   }
@@ -161,7 +182,7 @@
     background: #212121;
     border-radius: 8px;
   }
-  .user-chat p {
+  .user-chat-name {
     color: #ececec;
     font-size: 14px;
     padding: 8px;
@@ -170,7 +191,7 @@
     font-weight: 600;
     text-overflow: ellipsis;
     white-space: nowrap;
-    max-width: 60%;
+    flex: 0 1 80%;
   }
   .add-chat {
     color: #ffffffff;
@@ -186,6 +207,18 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+  }
+  .edit-chat-field {
+    background: transparent;
+    border: 1px solid #909090;
+    border-radius: 10px;
+    color: #c3c3c3;
+    max-width: 35%;
+    margin: 0 9px;
+    padding: 0 6px;
+  }
+  .action-dots {
+    color: #ffffff;
   }
   .chat-logo {
     width: 28px;
@@ -227,10 +260,10 @@
   input[type=checkbox]:after {
     content: "";
     display: block;
-    width: 0px;
-    height: 0px;
+    width: 0;
+    height: 0;
     border: solid #e8e8e8;
-    border-width: 0 0px 0px 0;
+    border-width: 0 0 0 0;
     -webkit-transform: rotate(180deg);
     -ms-transform: rotate(180deg);
     transform: rotate(180deg);
