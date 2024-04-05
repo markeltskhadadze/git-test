@@ -1,14 +1,18 @@
 <template>
   <div class="message-container">
-    <div
-        @click="userMessages.showMobileSideNav = !userMessages.showMobileSideNav"
-        class="hide-side-nav"
-    ></div>
+<!--    <div-->
+<!--        class="hide-side-nav"-->
+<!--        @click="userMessages.showMobileSideNav = !userMessages.showMobileSideNav"-->
+<!--    >-->
+<!--      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">-->
+<!--        <path fill-rule="evenodd" d="M15.707 15.707a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 010 1.414zm-6 0a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 011.414 1.414L5.414 10l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />-->
+<!--      </svg>-->
+<!--    </div>-->
     <MessageHeader />
     <div>
       <div
           class="messages-wrapper"
-          :class="{ 'messages-wrapper-mobile': !checkScreen }"
+          :class="{ 'messages-wrapper-mobile mx-6': !checkScreen }"
       >
         <div
             class="flex gap-2 m-3"
@@ -31,19 +35,22 @@
       :class="{ 'message-field-mobile': !checkScreen }"
     >
       <ExampleOfQuestions v-if="userMessages.showNewChat" />
-      <div class="relative" :class="{ 'mx-6': !checkScreen }">
+      <div class="relative">
         <input
             placeholder="Message ChatGPT…"
             v-model="userMessages.messageData"
             @keyup.enter="userMessages.getChatTree"
         />
-        <img
-            src="../../public/arrow-icon.png"
-            :style="{ 'background': !userMessages.messageData ? '#3d3d3d' : '#ffffff' }"
-            class="send-arrow"
-            alt="send-message"
+        <div
             @click="userMessages.getChatTree"
-        />
+            :style="{ 'background': !userMessages.messageData ? '#3d3d3d' : '#ffffff' }"
+            class="send-arrow relative"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path class="send-arrow1" stroke-linecap="round" stroke-linejoin="round" d="M8 7l4-4m0 0l4 4m-4-4v18" />
+          </svg>
+          <span class="tooltip-text">Send Message</span>
+        </div>
       </div>
       <p class="mistakes-text">ChatGPT can make mistakes. Consider checking important information.</p>
     </div>
@@ -93,6 +100,9 @@
     border: 1px solid #909090;
     padding: 14px 48px 14px 16px;
   }
+  input {
+    outline:none;
+  }
   .mistakes-text {
     padding: 12px 60px;
     text-align: center;
@@ -106,42 +116,43 @@
   .send-arrow {
     object-fit: contain;
     position: absolute;
-    width: 30px;
-    height: 30px;
     right: 2%;
     top: 20%;
-    transform: rotate(-90deg);
     padding: 3px;
     border-radius: 8px;
     cursor: pointer;
+    color: #1d1d1d;
   }
   .hide-side-nav {
-    content: '';
     position: absolute;
     top: 50%;
     right: 99%;
     width: 10px;
     height: 20px;
-    border-top: 2px solid transparent;
-    border-bottom: 2px solid transparent;
-    border-left: 2px solid #3d3d3d;
-    transition: transform 0.3s ease;
     cursor: pointer;
-  }
-  .hide-side-nav:hover {
-    transform: rotate(45deg);
-    height: 16px;
-    width: 15px;
-    border-width: 0 0 4px 4px;
-    border-color: #3d3d3d;
-    border-style: solid;
-    border-radius: 0 0 0 4px;
-    transition: transform 0.3s ease;
+    color: #ececec;
   }
   .user-logo {
     width: 24px;
     height: 24px;
     border-radius: 50%;
+  }
+  .tooltip-text {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+  }
+  .send-arrow:hover .tooltip-text {
+    visibility: visible;
   }
   .message-field-mobile {
     min-width: 90%;

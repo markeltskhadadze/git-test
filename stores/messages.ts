@@ -14,9 +14,9 @@ export const chatMessages = defineStore('chatMessages', () => {
         const userMessage = messageData.value ? messageData.value : exampleQuestion
         if (userMessage) {
             try {
-                const message = {
+                const message: TMessages = {
                     role: 'user',
-                    content: userMessage
+                    content: userMessage,
                 }
                 chatTrees.push(message)
 
@@ -28,7 +28,7 @@ export const chatMessages = defineStore('chatMessages', () => {
 
                 messageData.value = ''
                 chatTrees.push(responseMessage)
-            } catch(error) {
+            } catch(error: any) {
                 chatTrees.length = 0
                 push.error(error.message)
                 showNewChat.value = true

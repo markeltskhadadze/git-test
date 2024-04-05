@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col gap-20">
-    <div class="flex flex-col items-center">
+    <div class="flex flex-col items-center gap-4">
       <img
           class="logo"
           src="../../public/chatgpt-logo.jpeg"

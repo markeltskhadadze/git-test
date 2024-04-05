@@ -3,7 +3,9 @@
     <Notivue v-slot="item">
       <Notification :item="item" />
     </Notivue>
-    <ChatSideNav v-if="checkScreen || userMessages.showMobileSideNav" />
+    <transition name="fade">
+      <ChatSideNav v-if="checkScreen || userMessages.showMobileSideNav" />
+    </transition>
     <ChatMessageContent />
   </div>
 </template>
@@ -22,5 +24,11 @@
 .main-container {
   display: flex;
   min-height: 100vh;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.4s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
 }
 </style>
