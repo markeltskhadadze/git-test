@@ -4,7 +4,7 @@
       <Notification :item="item" />
     </Notivue>
     <transition name="fade">
-      <ChatSideNav v-if="checkScreen || userMessages.showMobileSideNav" />
+      <ChatSideNav :class="{ 'hidden 2xl:block': !userMessages.showMobileSideNav, '2xl:block': userMessages.showMobileSideNav }" />
     </transition>
     <ChatMessageContent />
   </div>
@@ -16,7 +16,7 @@
   import { screen } from '~/mixins/check-screen'
   import { chatMessages } from '~/stores/messages'
 
-  const { checkScreen, width } = screen.setup()
+  const { width } = screen.setup()
   const userMessages = chatMessages()
 </script>
 

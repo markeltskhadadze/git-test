@@ -3,8 +3,7 @@
     <img
         src="../../public/menu-icon.webp"
         alt="upload-image"
-        class="upload-image"
-        v-if="!checkScreen"
+        class="upload-image block 2xl:hidden"
         @click="userMessages.showMobileSideNav = !userMessages.showMobileSideNav"
     />
     <p>ChatGPT</p>
@@ -13,19 +12,12 @@
         <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
       </svg>
     </div>
-<!--    <img-->
-<!--        src="../../public/upload-icon.png"-->
-<!--        alt="upload-image"-->
-<!--        class="upload-image"-->
-<!--    />-->
   </div>
 </template>
 
 <script setup>
-  import { screen } from '~/mixins/check-screen'
   import { chatMessages } from '~/stores/messages'
 
-  const { checkScreen } = screen.setup()
   const userMessages = chatMessages()
 </script>
 

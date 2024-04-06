@@ -56,24 +56,19 @@ export const chatTree = defineStore('chatTree', () => {
         selectedChats.value = selectedChats.value.fill(selectAll.value)
     }
 
-    function toggleActionModal(index: number, action: string, chat?: string) {
-        if (action === 'edit') {
-            selectedChatsIndex.value = [index]
+    function toggleEditName(index: number) {
+        const existingIndex = showActionModal.value.indexOf(index)
+        if (existingIndex !== -1) {
+            showActionModal.value.splice(existingIndex, 1)
         } else {
-            const existingIndex = showActionModal.value.indexOf(index)
-            if (existingIndex !== -1) {
-                showActionModal.value.splice(existingIndex, 1)
-            } else {
-                showActionModal.value = [index]
-            }
+            showActionModal.value = [index]
         }
-        newChatName.value = chat || ''
     }
 
 
-    function changeChatName(index: number) {
-        userChats.value[index] = newChatName.value
-        selectedChatsIndex.value.length = 0
+    function changeChatName(index: number, event: any) {
+        userChats.value[index] = event.target.value
+        showActionModal.value.length = 0
     }
 
     return {
@@ -87,7 +82,7 @@ export const chatTree = defineStore('chatTree', () => {
         getSelectedChatCount,
         selectedChatsIndex,
         newChatName,
-        toggleActionModal,
+        toggleEditName,
         changeChatName,
         checkboxClick,
         addNewChatGroup,

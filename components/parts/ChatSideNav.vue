@@ -28,7 +28,7 @@
              v-model="userChatTree.selectAll"
              @change="userChatTree.selectAllChats"
          />
-         <p class="chat-list-title">Archive</p>
+         <p class="chat-list-title">Yesterday</p>
        </div>
        <transition name="fade">
          <div
@@ -55,33 +55,13 @@
          <input
              class="edit-chat-field"
              :value="chat"
-             @keyup.enter="userChatTree.changeChatName(index)"
+             :disabled="!userChatTree.showActionModal.includes(index)"
+             :style="{ 'border': userChatTree.showActionModal.includes(index) ? '1px solid' : 'none' }"
+             @keyup.enter="userChatTree.changeChatName(index, $event)"
          />
-         <svg @click="userChatTree.toggleActionModal(index, 'openModal')" xmlns="http://www.w3.org/2000/svg" class="action-dots h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-           <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
+         <svg @click="userChatTree.toggleEditName(index)" xmlns="http://www.w3.org/2000/svg" class="edit-icon h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+           <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
          </svg>
-       </div>
-       <div
-           class="actions-popup"
-           v-if="userChatTree.showActionModal.includes(index) && !userChatTree.selectedChatsIndex.includes(index)"
-       >
-         <div class="flex items-center gap-3">
-           <svg xmlns="http://www.w3.org/2000/svg" class="edit-icon h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-             <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-           </svg>
-           <p @click="userChatTree.toggleActionModal(index, 'edit', chat)" class="action-button">Rename</p>
-         </div>
-         <div class="flex items-center gap-3">
-           <svg xmlns="http://www.w3.org/2000/svg" class="delete-icon h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-             <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-           </svg>
-           <p
-               @click="userChatTree.openAcceptModal = !userChatTree.openAcceptModal"
-               class="delete-button"
-           >
-             Delete
-           </p>
-         </div>
        </div>
      </div>
    </div>
@@ -107,41 +87,8 @@
   .fade-enter, .fade-leave-to {
     opacity: 0;
   }
-  .actions-popup {
-    position: absolute;
-    left: 30%;
-    top: 80%;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    padding: 15px;
-    background: #2e2e2e;
-    border-radius: 12px;
-    z-index: 50;
-    min-width: 150px;
-  }
-  .actions-popup p {
-    font-size: 14px;
-  }
-  .action-button {
-    color: #ececec;
-  }
-  .delete-button {
-    color: #96393a;
-  }
-  .edit-icon {
-    color: #ffffffff;
-    width: 20px;
-    cursor: pointer;
-  }
-  .delete-icon {
-    color: #96393a;
-    width: 20px;
-    cursor: pointer;
-  }
   .side-nav-container {
     background: #181818;
-    flex: 1 0 5%;
     padding: 10px 20px;
     overflow-y: auto;
   }
@@ -155,7 +102,6 @@
     gap: 10px;
     padding: 10px 8px;
     cursor: pointer;
-    width: 95%;
   }
   .side-nav-header:hover {
     background: #212121;
@@ -164,6 +110,12 @@
   .side-nav-header p {
     color: #ececec;
     font-size: 14px;
+    font-weight:600
+  }
+  .delete-icon {
+    color: #96393a;
+    width: 20px;
+    cursor: pointer;
   }
   .user-chat {
     display: flex;
@@ -198,8 +150,9 @@
     color: #ececec;
     font-size: 14px;
     padding: 8px;
+    font-weight: 500;
   }
-  .action-dots {
+  .edit-icon {
     color: #ffffff;
     margin-right: 10px;
   }
@@ -224,9 +177,9 @@
     position: absolute;
     width: 20px;
     height: 20px;
-    border: 4px solid #e8e8e8;
+    border: 2px solid #e8e8e8;
     border-radius: 20px;
-    background-color: #445768;
+    background-color: transparent;
     transition: all 0.2s linear;
   }
   input[type=checkbox]:before {
@@ -239,7 +192,7 @@
     height: 20px;
     border: 1px solid #ffffff;
     border-radius: 3px;
-    background-color: #445768;
+    background-color: transparent;
   }
   input[type=checkbox]:after {
     content: "";
@@ -262,13 +215,13 @@
     width: 12px;
     height: 21px;
     border: solid #ececec;
-    border-width: 0 5px 5px 0;
+    border-width: 0 4px 4px 0;
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
     position: absolute;
     top: 3px;
-    left: 15px;
+    left: 13px;
   }
   .mobile-side-nav {
     position: fixed;
