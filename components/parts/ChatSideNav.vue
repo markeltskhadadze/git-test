@@ -216,7 +216,7 @@
     width: 12px;
     height: 21px;
     border: solid #ececec;
-    border-width: 0 4px 4px 0;
+    border-width: 0 3px 3px 0;
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);

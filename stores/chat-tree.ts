@@ -36,11 +36,12 @@ export const chatTree = defineStore('chatTree', () => {
     function deleteChat () {
         if (selectedChatsIndex.value.length) {
             userChats.value = userChats.value.filter((_, index) => !selectedChatsIndex.value.includes(index))
+            selectedChatsIndex.value.length = 0
         } else {
             selectAll.value = false
             userChats.value.length = 0
         }
-        selectedChats.value = selectedChats.value.fill(selectAll.value)
+        selectedChats.value = Array(userChats.value.length).fill(selectAll.value)
         openAcceptModal.value = false
     }
 
@@ -63,7 +64,6 @@ export const chatTree = defineStore('chatTree', () => {
             showActionModal.value = [index]
         }
     }
-
 
     function changeChatName(index: number, event: any) {
         userChats.value[index] = event.target.value
