@@ -91,6 +91,7 @@
     background: #181818;
     padding: 10px 20px;
     overflow-y: auto;
+    min-width: 300px;
   }
   .side-nav-container::-webkit-scrollbar {
     width: 0;
@@ -221,7 +222,7 @@
     transform: rotate(45deg);
     position: absolute;
     top: 3px;
-    left: 13px;
+    left: 15px;
   }
   .mobile-side-nav {
     position: fixed;

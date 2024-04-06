@@ -18,20 +18,19 @@ export const chatTree = defineStore('chatTree', () => {
     })
 
     const getSelectedChatCount = computed(() => {
-        return selectedChatsIndex.value.length ? selectedChatsIndex.value.length : 'all'
+        return selectedChats.value.filter(value => value).length
     })
 
     function addNewChatGroup() {
         if (!userMessages.chatTrees.length) {
             userChats.value = [...userChats.value, 'New chat']
-            userMessages.showNewChat = true
-            selectedChats.value.length = userChats.value.length
         } else {
             userChats.value = [...userChats.value, userMessages.chatTrees[0].content]
             userMessages.chatTrees.length = 0
-            userMessages.showNewChat = true
             selectedChats.value.length = userChats.value.length
         }
+        userMessages.showNewChat = true
+        selectedChats.value.length = userChats.value.length
     }
 
     function deleteChat () {
@@ -53,7 +52,7 @@ export const chatTree = defineStore('chatTree', () => {
     }
 
     function selectAllChats() {
-        selectedChats.value = selectedChats.value.fill(selectAll.value)
+        selectedChats.value = Array(userChats.value.length).fill(selectAll.value)
     }
 
     function toggleEditName(index: number) {
