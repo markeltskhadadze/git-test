@@ -18,6 +18,26 @@
           <div class="message-content">
             <p class="message-text">{{ chat.role }}</p>
             <p class="message-text">{{ chat.content }}</p>
+            <div
+                class="flex items-center gap-2 mt-2"
+                v-if="chat.role === 'assistant'"
+            >
+              <svg @click="userMessages.speakMessage(chat.content)" xmlns="http://www.w3.org/2000/svg" class="message-action-icon h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+              </svg>
+              <svg v-if="userMessages.currentMessage !== index" @click="userMessages.copyMessage(chat.content, index)" xmlns="http://www.w3.org/2000/svg" class="message-action-icon h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+              </svg>
+              <svg v-if="userMessages.currentMessage === index" xmlns="http://www.w3.org/2000/svg" class="message-action-icon h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="message-action-icon h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="message-action-icon h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 01.485.06l3.76.94m-7 10v5a2 2 0 002 2h.096c.5 0 .905-.405.905-.904 0-.715.211-1.413.608-2.008L17 13V4m-7 10h2m5-10h2a2 2 0 012 2v6a2 2 0 01-2 2h-2.5" />
+              </svg>
+            </div>
           </div>
         </div>
       </div>
@@ -71,7 +91,7 @@
     overflow-x: hidden;
   }
   .messages-wrapper {
-    min-width: 650px;
+    min-width: 750px;
     margin: 40px auto 0;
     flex: 1 0 80%;
     padding: 8px 16px;
@@ -95,6 +115,15 @@
   }
   input {
     outline:none;
+  }
+  .message-action-icon {
+    color: #686868;
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+  }
+  .message-action-icon:hover {
+    color: #ffffff;
   }
   .mistakes-text {
     padding: 12px 60px;

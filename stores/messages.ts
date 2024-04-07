@@ -3,10 +3,12 @@ import { ref, reactive, type Ref } from 'vue'
 import type { TMessages } from '~/types'
 
 export const chatMessages = defineStore('chatMessages', () => {
-    const messageData = ref('')
+    const messageData: Ref<string> = ref('')
     const showMobileSideNav: Ref<boolean> = ref(false)
     const showNewChat: Ref<boolean> = ref(true)
     const chatTrees = reactive<TMessages[]>([])
+    const textCopied: Ref<boolean> = ref(false)
+    const currentMessage = ref<number | null>(null)
     const { chatCompletion } = useChatgpt()
 
     async function getChatTree(exampleQuestion: string) {
@@ -28,6 +30,7 @@ export const chatMessages = defineStore('chatMessages', () => {
 
                 messageData.value = ''
                 chatTrees.push(responseMessage)
+                showNewChat.value = false
             } catch(error: any) {
                 chatTrees.length = 0
                 push.error(error.message)
@@ -36,11 +39,37 @@ export const chatMessages = defineStore('chatMessages', () => {
         }
     }
 
+    function copyMessage(message: string, index: number) {
+        navigator.clipboard.writeText(message)
+            .then(() => {
+                if (currentMessage.value !== null) {
+                    clearTimeout(currentMessage.value)
+                }
+                currentMessage.value = index
+                setTimeout(() => {
+                    currentMessage.value = null
+                }, 1500)
+            })
+            .catch((error) => {
+                push.error(error)
+            })
+    }
+
+    function speakMessage(message: string) {
+        const speechSynthesis = window.speechSynthesis
+        const utterance = new SpeechSynthesisUtterance(message)
+        speechSynthesis.speak(utterance)
+    }
+
     return {
         messageData,
         showMobileSideNav,
         chatTrees,
         showNewChat,
-        getChatTree
+        textCopied,
+        currentMessage,
+        speakMessage,
+        getChatTree,
+        copyMessage
     }
 })

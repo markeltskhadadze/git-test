@@ -135,7 +135,8 @@
     background: #181818;
     width: 16px;
     position: absolute;
-    right: 15px;
+    top: 4px;
+    right: 4px;
   }
   .chat-list {
     margin-top: 25px;
