@@ -235,7 +235,7 @@
   .mobile-side-nav {
     position: fixed;
     z-index: 30;
-    min-width: 60%;
+    max-width: 60%;
     height: 100%;
   }
 </style>
