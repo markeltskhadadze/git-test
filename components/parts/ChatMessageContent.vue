@@ -1,8 +1,14 @@
 <template>
   <div class="message-container">
     <MessageHeader />
-    <div>
+    <div
+      class="message-field"
+      :style="{ 'justify-content': userMessages.chatTrees.length ? 'space-between' : 'flex-end' }"
+      :class="{ 'message-field-mobile': !checkScreen }"
+    >
+      <ExampleOfQuestions v-if="userMessages.showNewChat" />
       <div
+          v-if="userMessages.chatTrees.length"
           class="messages-wrapper"
           :class="{ 'messages-wrapper-mobile mx-6': !checkScreen }"
       >
@@ -41,30 +47,28 @@
           </div>
         </div>
       </div>
-    </div>
-    <div
-      class="message-field"
-      :class="{ 'message-field-mobile': !checkScreen }"
-    >
-      <ExampleOfQuestions v-if="userMessages.showNewChat" />
-      <div class="relative">
-        <input
-            placeholder="Message ChatGPT…"
-            v-model="userMessages.messageData"
-            @keyup.enter="userMessages.getChatTree"
-        />
+      <div>
         <div
-            @click="userMessages.getChatTree"
-            :style="{ 'background': !userMessages.messageData ? '#3d3d3d' : '#ffffff' }"
-            class="send-arrow relative"
+            class="relative"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path class="send-arrow" stroke-linecap="round" stroke-linejoin="round" d="M8 7l4-4m0 0l4 4m-4-4v18" />
-          </svg>
-          <span class="tooltip-text">Send Message</span>
+          <input
+              placeholder="Message ChatGPT…"
+              v-model="userMessages.messageData"
+              @keyup.enter="userMessages.getChatTree"
+          />
+          <div
+              @click="userMessages.getChatTree"
+              :style="{ 'background': !userMessages.messageData ? '#3d3d3d' : '#ffffff' }"
+              class="send-arrow relative"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path class="send-arrow" stroke-linecap="round" stroke-linejoin="round" d="M8 7l4-4m0 0l4 4m-4-4v18" />
+            </svg>
+            <span class="tooltip-text">Send Message</span>
+          </div>
         </div>
+        <p class="mistakes-text">ChatGPT can make mistakes. Consider checking important information.</p>
       </div>
-      <p class="mistakes-text">ChatGPT can make mistakes. Consider checking important information.</p>
     </div>
   </div>
 </template>
@@ -99,6 +103,9 @@
   }
   .message-field {
     max-width: 750px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
   }
   .message-content {
     max-width: 650px;
@@ -144,15 +151,6 @@
     border-radius: 8px;
     cursor: pointer;
     color: #1d1d1d;
-  }
-  .hide-side-nav {
-    position: absolute;
-    top: 50%;
-    right: 99%;
-    width: 10px;
-    height: 20px;
-    cursor: pointer;
-    color: #ececec;
   }
   .user-logo {
     width: 24px;

@@ -14,6 +14,6 @@ export default defineNuxtConfig({
     'notivue/animations.css'
   ],
   chatgpt: {
-    apiKey: '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'
+    apiKey: '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'
   },
 })

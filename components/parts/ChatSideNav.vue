@@ -59,8 +59,11 @@
              :style="{ 'border': userChatTree.showActionModal.includes(index) ? '1px solid' : 'none' }"
              @keyup.enter="userChatTree.changeChatName(index, $event)"
          />
-         <svg @click="userChatTree.toggleEditName(index)" xmlns="http://www.w3.org/2000/svg" class="edit-icon h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+         <svg @click="userChatTree.toggleEditName(index)" v-if="!userChatTree.showActionModal.includes(index)" xmlns="http://www.w3.org/2000/svg" class="edit-icon h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
            <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+         </svg>
+         <svg @click="userChatTree.toggleEditName(index)" v-if="userChatTree.showActionModal.includes(index)" xmlns="http://www.w3.org/2000/svg" class="edit-icon h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+           <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
          </svg>
        </div>
      </div>
@@ -91,7 +94,7 @@
     background: #181818;
     padding: 10px 20px;
     overflow-y: auto;
-    min-width: 300px;
+    min-width: 310px;
   }
   .side-nav-container::-webkit-scrollbar {
     width: 0;
@@ -114,7 +117,7 @@
     font-weight:600
   }
   .delete-icon {
-    color: #96393a;
+    color: #ffffff;
     width: 20px;
     cursor: pointer;
   }
@@ -123,6 +126,7 @@
     justify-content: space-between;
     cursor: pointer;
     padding: 0 8px;
+    max-height: 35px;
   }
   .user-chat:hover {
     background: #212121;
@@ -153,10 +157,13 @@
     font-size: 14px;
     padding: 8px;
     font-weight: 500;
+    box-sizing: border-box;
   }
   .edit-icon {
     color: #ffffff;
     margin-right: 10px;
+    width: 20px;
+    height: 20px;
   }
   .chat-logo {
     width: 28px;
